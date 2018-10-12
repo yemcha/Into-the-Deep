@@ -1,0 +1,12 @@
+{ "columns":20,
+ "image":"tilemaps\/tiles\/kenny_platformer_64x64.png",
+ "imageheight":1024,
+ "imagewidth":320,
+ "margin":0,
+ "name":"kenny_platformer_64x64",
+ "spacing":0,
+ "tilecount":1280,
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset"
+}

@@ -1,0 +1,75 @@
+class SimpleGame extends Phaser.State {
+	menuSprite: Phaser.Sprite;
+	menuGroup: any;
+
+	preload() {
+		// add our logo image to the assets class under the
+		// key 'logo'. We're also setting the background colour
+		// so it's the same as the background colour in the image
+		this.game.load.image('logo', "assets/ds_logo.png");
+		this.game.load.image('ball', 'assets/shinyball.png');
+		this.game.stage.backgroundColor = 0xB20059;
+
+		this.game.load.image("menubutton", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAaCAYAAADWm14/AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjdENjg1RjVENjhEQjExRTVBNEJBQzNBMEMyMjEyMzAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjdENjg1RjVFNjhEQjExRTVBNEJBQzNBMEMyMjEyMzAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6N0Q2ODVGNUI2OERCMTFFNUE0QkFDM0EwQzIyMTIzMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6N0Q2ODVGNUM2OERCMTFFNUE0QkFDM0EwQzIyMTIzMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6nb2YGAAAAo0lEQVR42mL8//9/KAMDQxoD/UEFEJ9lBDrgHZAhOAAO2APErkwDZDkcMDEMMAA54N4A2f0eRIDSgBKQDh0AB8wCOQLkAIYRnwZGtgNYgHhAEyHIAbuhjqA3MAbiMKYBspwBVgIPikT4fqATYfoAVscMoyXhqANYkAoFeraM7sHbIcBEuPv/wIAOUAYARYHLAIW+8WgihDmgc4DsBvULGAACDAA0B55U5ocSZgAAAABJRU5ErkJggg==");
+		this.game.load.image("reset", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALgAAAAwCAYAAACi0LByAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkY5NzA1OTI0NjhERTExRTVBNzg0RDA5ODU4MTVCRTNBIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkY5NzA1OTI1NjhERTExRTVBNzg0RDA5ODU4MTVCRTNBIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Rjk3MDU5MjI2OERFMTFFNUE3ODREMDk4NTgxNUJFM0EiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Rjk3MDU5MjM2OERFMTFFNUE3ODREMDk4NTgxNUJFM0EiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5bVT8rAAAFaElEQVR42uxc7ZGcOBDFLv9fMlgyWDI4OQLjCBZHYELAERyOwNoIjCMwG4GZDNgMcAQcVLXq+vr0xQCz6533qrq8M6BGaj1a3S2N30zTlADAa8VbmAAAwQEABAcAEBwAQHAAAMEBAAQHQHAAAMEBAAQHABAcAEBwAADBAeD5CJ7OUs3SzTLOMpEsf7ezlHSPrR0A7IY3BxyXrYncN4H7fs/S0P0L9CzFLGqWPuI5yvH9QHINyMlmGUlCTmUgRzKC4PsRPCXj3q1s90gTck+fvzDS+zAFdFaRL8qfCEXOIWTrr2TLEQQ/jtxPzKMuXuY2oGstwU9sArn+E3m4l+p50zNXmyW8+8Y+n1goaHQrtoKe6PN1knwh+A7STP9HN4uy3Kvomgt15DMNlEW/QbXT+PaWbuVYjZRsbKPDvouks2h2b/9C7XC4vN1pufxs8cKKPItER9dOB72zi/4H5tFfC1IKS0z+4rJvQt66ZHYYrjWBf7eDjlJ8fogIMfQZsfoaDGy5fi3giXsRmV+UdF9zrTH4HgS/F5WRKmKi7g8eV8hzp4z8MXGwiWH7FXrHZN8kt2QJdLeiXQy51Yb+ZjTufgfdanfbbYxxMoonjcTElLlow6Wl+HFLDF56YnAZmxoMjni2oliXx722Pvr0FiJX6ZjOgT6XgbGmB+QVqSV34uMzcyJta/pbUv9524bpbi22yB19qYWdjb7NY/2TEwieQHX07yS+T8WEDsLgso0SL69BS2ImQQu9vdArk+hCJJdrE2vleaHPldZSFJjY+AwkESc23t4ypoa+H+mafAmkc9Diendm0eHVEnyyELv2GFJ6kowZdbBUhrRYfUZh9NpR1eBebNxYRVlDcB+UZZXTwlaVaGMjuFxJbFWbjF0vHO14P0qhjz8ru2aCa4eRXEt8GSBQLkioA/0YPWTNLF78JRC8ZV7bFTKEPHjsWOWKwcfce/qRBmx7kTJhnvz3rAmXMbKK0Yg2a6Fpxy6hDZDc0U+e5HZCasu9DUuiB2qXWfTyyobUqynx3lrRGRxjsW7eCXkvyoc8mdMem/rQB/rYRra5Y4mqtF27YsyHVVGKxH3m5IY61gcy8M+WCTinhKbIYB3pdem6i6gKmEn6SJO97I7+TfKDKhqjqC0fXfZ8on4UK8t+uYVkNxZSush6zvW1uA3scJ9dwz/yuOxDhCdoVnqO0Mv2myavW+HhpNTCEy2E/8Q2pj44+rlG7zkwz/wrcR80sxHDlG1/7EmcnfE+YDv10gj+FKiHpzRhH0QNfcuGxMBqxXeChENEjbxwLIUj6crJoxuSp+JFKjweVO1g04aFO+2K8O/W4kweA31WFyL2UyAEyTx9fFaC39JyWAovkbLdNbnZUyfbDwQtE/+Fxc4lI/ijZ+NjMfD3WX4xY1fULnPEkbnwjLXFI+b0EvzcOlFkm4qFGJ1lF5kTo2U2fhAvY8tspCzO51I7n9pju5T6+X3T6rexklFPcRhEPVRCb6iiKM9hJl4VUaLmW5A0lvp2JjZjarbJIct+/N6e7lMOvVsPW8nSmumfJl21pY6sHRWKQdT5a9bnMVBFqQNz4uNK7ejHwGxXs+/7FZt/u5cJa2FIPa2H3lgmVIESE99cKCw7Zq5+5I57baf4cs8LrHc8Tcif10Y4lTKgo3eML78QwY2D6D17GukWjm49D56zcljF4romCZ/7NnF6e+GEJk3+/RUMX7L7iHvNT+4Gz3mRGL1HjiVhpbbY5DxnIdil58OVA+3SlyN+ssY7rCwJRG+pcwLAITiS4ADw7MB/GwGA4AAAggMACA4AIDgAgOAAAIIDIDhMAIDgAACCAwAIDgAgOADshX8EGAAO4op+FszNegAAAABJRU5ErkJggg==");
+		this.game.load.image("thankyou", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALgAAAAwCAYAAACi0LByAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkY5QTk2MkJENjhERjExRTU4RkI4RTEyODJEQUJDMjVGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkY5QTk2MkJFNjhERjExRTU4RkI4RTEyODJEQUJDMjVGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RjlBOTYyQkI2OERGMTFFNThGQjhFMTI4MkRBQkMyNUYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RjlBOTYyQkM2OERGMTFFNThGQjhFMTI4MkRBQkMyNUYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz640ZbzAAAEbklEQVR42uyb/1GjQBTH1xv/h6sgXAXGCsQKTAdiBaYDSQVyFRg7iBUcqUCsQKzgSAU5GN+bvNvZ5UcCAZLvZ+aNCPuTfPft2wUuttutAuBU+YFbACBwACBwACBwACBwACBwACBwAIEDAIEDAIEDAIEDAIEDAIEDUM3lEerwyQpiMgCOwkXHr8sGub1o5x5yW/bQVznIhsg0Nze3lAyMQOBZbo52bkM/5KFCrQsLmjt6MdDfomjnTW6L3MIT1VtAluQ2N1yPaKDPKc2gQhSPLBONcwzpHOpEsqfX+tN0EMOPDQaPBnHZLHZzoAPsbJEZkPje6biMhNK8U54Avz3ogq52UV5ItAvDtYUlNm/ikXVjbkuuAQj8IIr46UMTeRGuvFLcvaHjTBP3B+UFoHXajMEzWgAWi6UrOvespbknk+L2KS8Agw9RWOQfNdIOQdxTVX9XhtO6R6hL9XxPPAj8MJH3Ke5CoCv1vW3Ii9yiHaEl/Ux97/Bw2r9qtwMU0IylL5JjsqZ12QTH5VWFcjOtbtMuBl/3DHVwOz+pnZGlnMjSb/36tHeFF/vgHVm4tRO2XBfj10iT5JblFtOxJNDyzLTrKdmWylhZ+rNPXbGhrCnl57LcivvgivSB4XokyuJzgdYuva0ptaOqrabrvkUTccN8e9u5vovC4ULx95eYbQKDJ+IZ51rt9vqvyavf1ajLt9Q1r+m5i+cGbzVnvIxmDFP5ruhfJDw6Hxd1/BRtvaa2TlQ/T54HvU04ZObq/4dKqfiRb7TpfiKO5ZO1hM5VEWr5ZF1XNcX9SnXVDedCUf5U609R3pcQbETn1oY6uI8bKmsOgY+D2HAutYiMvXdqyfNWUdeqZl16HP0uxB007F9KgtW9eKh5b9nHqKSspZYWAj8xyjxn0kF9V4YQqSmRGCwuhR0T8sYy3JjU6EcmwhkI3AI/6Dk13A7K/C3i9H13IlYUijg0A7AnX2oDdtNAvE12vG7OTeBJR96uS1LxY7kl4UQXM4ZPIncOEHkowpQ7y4yQWBbXkqDEy3sNB30xwG5L4vk5XU/GJvAxsqoIFUIxxQ9R5Cvy0NzGV0P8z/26t4h8aQltEi0EMg0I03ono35kJf1uNdaHwMtFthAC4B0Q3hl5UvWe2PYl8kwTZWQZBLxQfqE6QrJU7V6rCLTBwWU5dC84T1HfsxhQpgHzTHlcg+f/pOutvZt0CR1XTvPFjX8kT/aoxcqZKt/ua0vkMdUT0/91p3AW0bokz4z6+UThmIyfv9Tuaa0evj2QECeUV7JW5duKTkVo09rapssvekLR8bW2+BjbVyuemHpT+sHTEbT5k45vVfWneh7NEFMRXiQVi0t+eORqYUlccR9taXyyZVv3t0uBu2r3zoMvOp8qvEF4rNnnibywd643oetvMl21+ySNR3AGcXcO33NH9feR91kIHPTrvQ/9wHv0YBflNAlKdk7gwcHowxNeKFYtEiFwABCiAACBAwCBAwCBAwCBAwCBAwgcgBHzT4ABAOR9hYyt7fAmAAAAAElFTkSuQmCC");
+	}
+
+	create() {
+		// add the 'logo' sprite to the game, position it in the
+		// center of the screen, and set the anchor to the center of
+		// the image so it's centered properly. There's a lot of
+		// centering in that last sentence
+		//var logo = this.game.add.sprite( this.game.world.centerX, this.game.world.centerY, 'logo' );
+		//logo.anchor.setTo( 0.5, 0.5 );
+
+		this.menuSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'ball');
+		this.menuSprite.inputEnabled = true;
+		this.game.physics.enable(this.menuSprite, Phaser.Physics.ARCADE);
+
+		this.menuGroup = this.game.add.group();
+		var menuButton = this.game.add.button(this.game.width / 2, this.game.height - 30, "menubutton", this.toggleMenu);
+		menuButton.anchor.set(0.5);
+		this.menuGroup.add(menuButton);
+		var reset = this.game.add.button(this.game.width / 2, this.game.height + 50, "reset", function () { });
+		reset.anchor.set(0.5);
+		this.menuGroup.add(reset);
+		var thankYou = this.game.add.button(this.game.width / 2, this.game.height + 130, "thankyou", function () { });
+		thankYou.anchor.set(0.5);
+		this.menuGroup.add(thankYou);
+	}
+
+	update() {
+		//  only move when you click
+		//if (this.game.input.mousePointer.isDown) {
+		//  400 is the speed it will move towards the mouse
+		this.game.physics.arcade.moveToPointer(this.menuSprite, 200);
+
+		//  if it's overlapping the mouse, don't move any more
+		if (Phaser.Rectangle.contains(this.menuSprite.body, this.game.input.x, this.game.input.y)) {
+			this.menuSprite.body.velocity.setTo(0, 0);
+		}
+
+		console.log(this.game.input.x);
+		console.log(this.game.input.y);
+
+		if(this.menuSprite.input.pointerDown(0)){
+			this.menuGroup.x = this.game.input.x;
+			this.menuGroup.y = this.game.input.y;
+			console.log('clicked');
+		}		
+	}
+
+	toggleMenu = () => {
+		if (this.menuGroup.y == 0) {
+			var menuTween = this.game.add.tween(this.menuGroup).to({
+				y: -180
+			}, 500, Phaser.Easing.Bounce.Out, true);
+		}
+		if (this.menuGroup.y == -180) {
+			var menuTween = this.game.add.tween(this.menuGroup).to({
+				y: 0
+			}, 500, Phaser.Easing.Bounce.Out, true);
+		}
+	}
+}

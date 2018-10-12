@@ -1,0 +1,12 @@
+{ "columns":37,
+ "image":"tilemaps\/tiles\/phaser_tiles.png",
+ "imageheight":607,
+ "imagewidth":607,
+ "margin":0,
+ "name":"phaser_tiles",
+ "spacing":0,
+ "tilecount":1369,
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset"
+}

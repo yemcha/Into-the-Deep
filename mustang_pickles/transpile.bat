@@ -1,0 +1,1 @@
+%USERPROFILE%\AppData\Roaming\npm\tsc --removeComments false --skipLibCheck true --out bin/js/game.js --diagnostics

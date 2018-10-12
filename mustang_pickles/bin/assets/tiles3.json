@@ -1,0 +1,12 @@
+{ "columns":52,
+ "image":"tilemaps\/tiles\/tiles2.png",
+ "imageheight":910,
+ "imagewidth":840,
+ "margin":0,
+ "name":"tiles2",
+ "spacing":0,
+ "tilecount":2912,
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset"
+}
